@@ -1,0 +1,180 @@
+{
+	"info": {
+		"name": "Biblioteca - Prestamos",
+		"description": "CRUD de prestamos. Requiere un libro existente: la variable libroId debe ser el id devuelto al crear un libro. El POST guarda el id del prestamo en prestamoId.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080"
+		},
+		{
+			"key": "libroId",
+			"value": "1"
+		},
+		{
+			"key": "prestamoId",
+			"value": "1"
+		}
+	],
+	"item": [
+		{
+			"name": "Listar prestamos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/prestamos",
+					"host": ["{{baseUrl}}"],
+					"path": ["prestamos"]
+				},
+				"description": "Obtiene todos los prestamos."
+			},
+			"response": []
+		},
+		{
+			"name": "Crear prestamo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test('Responde 201', function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"const prestamo = pm.response.json();",
+							"pm.collectionVariables.set('prestamoId', prestamo.id);",
+							"console.log('prestamoId guardado: ' + prestamo.id);"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"libroId\": {{libroId}},\n  \"prestatario\": \"Ana Perez\",\n  \"fechaPrestamo\": \"2026-10-21\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/prestamos",
+					"host": ["{{baseUrl}}"],
+					"path": ["prestamos"]
+				},
+				"description": "Crea un prestamo activo para el libro de la variable libroId."
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener prestamo por ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/prestamos/{{prestamoId}}",
+					"host": ["{{baseUrl}}"],
+					"path": ["prestamos", "{{prestamoId}}"]
+				},
+				"description": "Obtiene un prestamo por su id."
+			},
+			"response": []
+		},
+		{
+			"name": "Registrar devolucion",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"libroId\": {{libroId}},\n  \"prestatario\": \"Ana Perez\",\n  \"fechaPrestamo\": \"2026-10-21\",\n  \"fechaDevolucion\": \"2026-10-28\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/prestamos/{{prestamoId}}",
+					"host": ["{{baseUrl}}"],
+					"path": ["prestamos", "{{prestamoId}}"]
+				},
+				"description": "Actualiza el prestamo y lo marca como DEVUELTO."
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar prestamo",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/prestamos/{{prestamoId}}",
+					"host": ["{{baseUrl}}"],
+					"path": ["prestamos", "{{prestamoId}}"]
+				},
+				"description": "Elimina el prestamo indicado por prestamoId. Responde 204."
+			},
+			"response": []
+		},
+		{
+			"name": "Prestamo inexistente",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/prestamos/99999",
+					"host": ["{{baseUrl}}"],
+					"path": ["prestamos", "99999"]
+				},
+				"description": "Debe responder 404 si el id no existe."
+			},
+			"response": []
+		},
+		{
+			"name": "Crear prestamo con datos invalidos",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/prestamos",
+					"host": ["{{baseUrl}}"],
+					"path": ["prestamos"]
+				},
+				"description": "Debe responder 400 porque faltan libro, prestatario y fecha."
+			},
+			"response": []
+		}
+	]
+}
