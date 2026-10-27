@@ -1,0 +1,207 @@
+{
+	"info": {
+		"name": "Foro - Temas y comentarios",
+		"description": "Buscar, ver y publicar temas, y comentar. categoriaId y autorId deben existir. El POST de un tema guarda temaId.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080"
+		},
+		{
+			"key": "categoriaId",
+			"value": "1"
+		},
+		{
+			"key": "autorId",
+			"value": "1"
+		},
+		{
+			"key": "temaId",
+			"value": "1"
+		},
+		{
+			"key": "comentarioId",
+			"value": "1"
+		}
+	],
+	"item": [
+		{
+			"name": "Listar categorias",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{baseUrl}}/categorias"
+			}
+		},
+		{
+			"name": "Publicar tema",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"if (pm.response.code === 201) {",
+							"    pm.collectionVariables.set('temaId', pm.response.json().id);",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"titulo\": \"Como conectar Oracle\",\n  \"contenido\": \"Uso el wallet y JPA para el foro.\",\n  \"categoriaId\": {{categoriaId}},\n  \"autorId\": {{autorId}}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{baseUrl}}/temas"
+			}
+		},
+		{
+			"name": "Buscar temas",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/temas?texto=Oracle&categoriaId={{categoriaId}}",
+					"host": ["{{baseUrl}}"],
+					"path": ["temas"],
+					"query": [
+						{
+							"key": "texto",
+							"value": "Oracle"
+						},
+						{
+							"key": "categoriaId",
+							"value": "{{categoriaId}}"
+						}
+					]
+				}
+			}
+		},
+		{
+			"name": "Ver tema",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{baseUrl}}/temas/{{temaId}}"
+			}
+		},
+		{
+			"name": "Actualizar tema",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"titulo\": \"Como conectar Oracle Cloud\",\n  \"contenido\": \"Uso el wallet, JPA y el alias biblio_low.\",\n  \"categoriaId\": {{categoriaId}},\n  \"autorId\": {{autorId}}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{baseUrl}}/temas/{{temaId}}"
+			}
+		},
+		{
+			"name": "Comentar tema",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"if (pm.response.code === 201) {",
+							"    pm.collectionVariables.set('comentarioId', pm.response.json().id);",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"contenido\": \"Yo use el alias biblio_low.\",\n  \"autorId\": {{autorId}}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{baseUrl}}/temas/{{temaId}}/comentarios"
+			}
+		},
+		{
+			"name": "Listar comentarios",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{baseUrl}}/temas/{{temaId}}/comentarios"
+			}
+		},
+		{
+			"name": "Actualizar comentario",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"contenido\": \"Confirmo que biblio_low funciona.\",\n  \"autorId\": {{autorId}}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{baseUrl}}/comentarios/{{comentarioId}}"
+			}
+		},
+		{
+			"name": "Eliminar comentario",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "{{baseUrl}}/comentarios/{{comentarioId}}"
+			}
+		},
+		{
+			"name": "Eliminar tema",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "{{baseUrl}}/temas/{{temaId}}"
+			}
+		}
+	]
+}
