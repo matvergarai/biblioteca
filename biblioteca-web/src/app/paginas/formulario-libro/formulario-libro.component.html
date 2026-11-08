@@ -1,0 +1,61 @@
+<section class="panel">
+  <a routerLink="/libros" class="volver">Volver al listado</a>
+
+  @if (cargando) {
+    <p class="estado">Cargando libro…</p>
+  } @else if (cargaFallida) {
+    <p class="alerta" role="alert">{{ error }}</p>
+  } @else {
+    <header class="panel-cabecera">
+      <div>
+        <p class="kicker">{{ editando ? 'Actualizar' : 'Alta' }}</p>
+        <h1>{{ editando ? 'Editar libro' : 'Nuevo libro' }}</h1>
+      </div>
+    </header>
+
+    @if (error) {
+      <p class="alerta" role="alert">{{ error }}</p>
+    }
+
+    <form [formGroup]="formulario" (ngSubmit)="guardar()" novalidate>
+      <label>
+        Título
+        <input type="text" formControlName="titulo" maxlength="200" autocomplete="off" />
+        @if (invalido('titulo')) {
+          <small>{{ mensajeCampo('titulo') }}</small>
+        }
+      </label>
+
+      <label>
+        Autor
+        <input type="text" formControlName="autor" maxlength="150" autocomplete="off" />
+        @if (invalido('autor')) {
+          <small>{{ mensajeCampo('autor') }}</small>
+        }
+      </label>
+
+      <label>
+        Año de publicación
+        <input type="number" formControlName="anioPublicacion" min="1" max="2100" />
+        @if (invalido('anioPublicacion')) {
+          <small>{{ mensajeCampo('anioPublicacion') }}</small>
+        }
+      </label>
+
+      <label>
+        Género
+        <input type="text" formControlName="genero" maxlength="80" autocomplete="off" />
+        @if (invalido('genero')) {
+          <small>{{ mensajeCampo('genero') }}</small>
+        }
+      </label>
+
+      <div class="grupo-botones">
+        <button type="submit" class="boton boton-primario" [disabled]="guardando">
+          {{ guardando ? 'Guardando…' : editando ? 'Guardar cambios' : 'Agregar libro' }}
+        </button>
+        <a routerLink="/libros" class="boton">Cancelar</a>
+      </div>
+    </form>
+  }
+</section>

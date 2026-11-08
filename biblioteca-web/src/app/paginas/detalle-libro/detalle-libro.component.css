@@ -1,0 +1,41 @@
+.ficha {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem 1.5rem;
+  margin: 0 0 1.5rem;
+}
+
+.ficha div {
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--linea);
+}
+
+.ficha dt {
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--tinta-suave);
+}
+
+.ficha dd {
+  margin: 0.25rem 0 0;
+  font-size: 1.05rem;
+}
+
+.volver {
+  display: inline-block;
+  margin-bottom: 1rem;
+  color: var(--bosque);
+  font-weight: 600;
+}
+
+.confirmacion {
+  padding: 1rem 1.1rem;
+  border: 1px solid #e7cfc6;
+  border-radius: 12px;
+  background: var(--alerta-fondo);
+}
+
+.confirmacion p {
+  margin: 0 0 0.85rem;
+}

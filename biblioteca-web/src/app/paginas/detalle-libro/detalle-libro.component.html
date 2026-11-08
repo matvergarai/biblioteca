@@ -1,0 +1,58 @@
+<section class="panel">
+  <a routerLink="/libros" class="volver">Volver al listado</a>
+
+  @if (cargando) {
+    <p class="estado">Cargando libro…</p>
+  } @else if (error && !libro) {
+    <p class="alerta" role="alert">{{ error }}</p>
+  } @else if (libro) {
+    <header class="panel-cabecera">
+      <div>
+        <p class="kicker">Ficha</p>
+        <h1>{{ libro.titulo }}</h1>
+      </div>
+      <a class="boton boton-primario" [routerLink]="['/libros', libro.id, 'editar']">Editar</a>
+    </header>
+
+    <dl class="ficha">
+      <div>
+        <dt>ID</dt>
+        <dd>{{ libro.id }}</dd>
+      </div>
+      <div>
+        <dt>Título</dt>
+        <dd>{{ libro.titulo }}</dd>
+      </div>
+      <div>
+        <dt>Autor</dt>
+        <dd>{{ libro.autor }}</dd>
+      </div>
+      <div>
+        <dt>Año de publicación</dt>
+        <dd>{{ libro.anioPublicacion }}</dd>
+      </div>
+      <div>
+        <dt>Género</dt>
+        <dd>{{ libro.genero }}</dd>
+      </div>
+    </dl>
+
+    @if (error) {
+      <p class="alerta" role="alert">{{ error }}</p>
+    }
+
+    @if (!confirmar) {
+      <button type="button" class="boton boton-peligro" (click)="confirmar = true">Eliminar</button>
+    } @else {
+      <div class="confirmacion">
+        <p>¿Eliminar este libro del catálogo?</p>
+        <div class="grupo-botones">
+          <button type="button" class="boton boton-peligro" (click)="eliminar()" [disabled]="eliminando">
+            {{ eliminando ? 'Eliminando…' : 'Eliminar' }}
+          </button>
+          <button type="button" class="boton" (click)="confirmar = false" [disabled]="eliminando">Cancelar</button>
+        </div>
+      </div>
+    }
+  }
+</section>

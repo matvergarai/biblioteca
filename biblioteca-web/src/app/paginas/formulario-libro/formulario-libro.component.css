@@ -1,0 +1,41 @@
+form {
+  display: grid;
+  gap: 1rem;
+  max-width: 36rem;
+}
+
+label {
+  display: grid;
+  gap: 0.35rem;
+  font-weight: 600;
+}
+
+input {
+  font: inherit;
+  color: var(--tinta);
+  background: var(--papel);
+  border: 1px solid var(--linea);
+  border-radius: 10px;
+  padding: 0.7rem 0.8rem;
+}
+
+input:focus {
+  outline: 2px solid var(--bosque);
+  border-color: transparent;
+}
+
+small {
+  color: var(--terracota);
+  font-weight: 600;
+}
+
+.volver {
+  display: inline-block;
+  margin-bottom: 1rem;
+  color: var(--bosque);
+  font-weight: 600;
+}
+
+.grupo-botones a.boton {
+  text-decoration: none;
+}

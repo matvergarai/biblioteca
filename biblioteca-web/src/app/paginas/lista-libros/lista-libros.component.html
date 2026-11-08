@@ -1,0 +1,64 @@
+<section class="panel">
+  <header class="panel-cabecera">
+    <div>
+      <p class="kicker">Catálogo</p>
+      <h1>Libros</h1>
+    </div>
+  </header>
+
+  @if (cargando) {
+    <p class="estado">Cargando libros…</p>
+  } @else if (error && libros.length === 0) {
+    <p class="alerta" role="alert">{{ error }}</p>
+    <button type="button" class="boton" (click)="cargar()">Reintentar</button>
+  } @else if (libros.length === 0) {
+    <p class="estado">Todavía no hay libros. Agrega el primero desde «Nuevo libro».</p>
+  } @else {
+    @if (error) {
+      <p class="alerta" role="alert">{{ error }}</p>
+    }
+    <div class="tabla-contenedor">
+      <table>
+        <caption class="sr-only">Libros registrados en la biblioteca</caption>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Título</th>
+            <th>Autor</th>
+            <th>Año</th>
+            <th>Género</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (libro of libros; track libro.id) {
+            <tr>
+              <td>{{ libro.id }}</td>
+              <td>{{ libro.titulo }}</td>
+              <td>{{ libro.autor }}</td>
+              <td>{{ libro.anioPublicacion }}</td>
+              <td>{{ libro.genero }}</td>
+              <td class="acciones">
+                <a [routerLink]="['/libros', libro.id]">Ver</a>
+                <a [routerLink]="['/libros', libro.id, 'editar']">Editar</a>
+                <button type="button" class="enlace-peligro" (click)="pedirEliminar(libro)">Eliminar</button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+
+  @if (pendiente) {
+    <div class="confirmacion" role="dialog" aria-labelledby="confirmar-titulo">
+      <p id="confirmar-titulo">¿Eliminar «{{ pendiente.titulo }}»?</p>
+      <div class="grupo-botones">
+        <button type="button" class="boton boton-peligro" (click)="confirmarEliminar()" [disabled]="eliminando">
+          {{ eliminando ? 'Eliminando…' : 'Eliminar' }}
+        </button>
+        <button type="button" class="boton" (click)="cancelarEliminar()" [disabled]="eliminando">Cancelar</button>
+      </div>
+    </div>
+  }
+</section>

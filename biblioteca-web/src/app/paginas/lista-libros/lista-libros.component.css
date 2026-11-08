@@ -1,0 +1,35 @@
+.acciones {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.75rem;
+  white-space: nowrap;
+}
+
+.acciones a,
+.enlace-peligro {
+  font: inherit;
+  font-weight: 600;
+  color: var(--bosque);
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.enlace-peligro {
+  color: var(--terracota);
+}
+
+.confirmacion {
+  margin-top: 1.25rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid #e7cfc6;
+  border-radius: 12px;
+  background: var(--alerta-fondo);
+}
+
+.confirmacion p {
+  margin: 0 0 0.85rem;
+}
