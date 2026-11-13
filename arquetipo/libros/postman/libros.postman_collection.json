@@ -1,0 +1,176 @@
+{
+	"info": {
+		"name": "Biblioteca - Libros",
+		"description": "CRUD del microservicio de libros. Base: http://localhost:8080. El POST guarda el id en la variable libroId para usarlo en GET, PUT y DELETE.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080"
+		},
+		{
+			"key": "libroId",
+			"value": "1"
+		}
+	],
+	"item": [
+		{
+			"name": "Listar libros",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/libros",
+					"host": ["{{baseUrl}}"],
+					"path": ["libros"]
+				},
+				"description": "Obtiene todos los libros."
+			},
+			"response": []
+		},
+		{
+			"name": "Crear libro",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test('Responde 201', function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"const libro = pm.response.json();",
+							"pm.collectionVariables.set('libroId', libro.id);",
+							"console.log('libroId guardado: ' + libro.id);"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"titulo\": \"Cien anos de soledad\",\n  \"autor\": \"Gabriel Garcia Marquez\",\n  \"anioPublicacion\": 1967,\n  \"genero\": \"Novela\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/libros",
+					"host": ["{{baseUrl}}"],
+					"path": ["libros"]
+				},
+				"description": "Crea un libro. La respuesta 201 incluye el id, que queda en la variable libroId."
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener libro por ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/libros/{{libroId}}",
+					"host": ["{{baseUrl}}"],
+					"path": ["libros", "{{libroId}}"]
+				},
+				"description": "Obtiene un libro por su id. Usa la variable libroId."
+			},
+			"response": []
+		},
+		{
+			"name": "Actualizar libro",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"titulo\": \"Cien anos de soledad\",\n  \"autor\": \"Gabriel Garcia Marquez\",\n  \"anioPublicacion\": 1967,\n  \"genero\": \"Realismo magico\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/libros/{{libroId}}",
+					"host": ["{{baseUrl}}"],
+					"path": ["libros", "{{libroId}}"]
+				},
+				"description": "Actualiza el libro indicado por libroId."
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar libro",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/libros/{{libroId}}",
+					"host": ["{{baseUrl}}"],
+					"path": ["libros", "{{libroId}}"]
+				},
+				"description": "Elimina el libro indicado por libroId. Responde 204 sin cuerpo."
+			},
+			"response": []
+		},
+		{
+			"name": "Libro inexistente",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/libros/99999",
+					"host": ["{{baseUrl}}"],
+					"path": ["libros", "99999"]
+				},
+				"description": "Debe responder 404 si el id no existe."
+			},
+			"response": []
+		},
+		{
+			"name": "Crear libro con datos invalidos",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/libros",
+					"host": ["{{baseUrl}}"],
+					"path": ["libros"]
+				},
+				"description": "Debe responder 400 porque faltan titulo, autor, anio y genero."
+			},
+			"response": []
+		}
+	]
+}
