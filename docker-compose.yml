@@ -1,0 +1,42 @@
+services:
+  usuarios:
+    build: ./arquetipo/usuarios
+    image: foro-usuarios
+    ports:
+      - "8081:8081"
+    environment:
+      ORACLE_PASSWORD: ${ORACLE_PASSWORD:-}
+      ORACLE_TNS_ADMIN: /opt/tns
+      ORACLE_TNS_ALIAS: biblio_low
+    volumes:
+      - ${ORACLE_WALLET:-C:/oracle/wallet/Wallet_biblio}:/wallet:ro
+
+  publicaciones:
+    build: ./arquetipo/publicaciones
+    image: foro-publicaciones
+    ports:
+      - "8082:8082"
+    environment:
+      ORACLE_PASSWORD: ${ORACLE_PASSWORD:-}
+      ORACLE_TNS_ADMIN: /opt/tns
+      ORACLE_TNS_ALIAS: biblio_low
+    volumes:
+      - ${ORACLE_WALLET:-C:/oracle/wallet/Wallet_biblio}:/wallet:ro
+
+  moderacion:
+    build: ./arquetipo/moderacion
+    image: foro-moderacion
+    ports:
+      - "8083:8083"
+    environment:
+      ORACLE_PASSWORD: ${ORACLE_PASSWORD:-}
+      ORACLE_TNS_ADMIN: /opt/tns
+      ORACLE_TNS_ALIAS: biblio_low
+    volumes:
+      - ${ORACLE_WALLET:-C:/oracle/wallet/Wallet_biblio}:/wallet:ro
+
+  nexo:
+    build: ./foro-web
+    image: foro-nexo
+    ports:
+      - "4200:80"
