@@ -1,0 +1,69 @@
+{
+	"info": {
+		"name": "Foro usuarios",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{ "key": "baseUrl", "value": "http://localhost:8081" },
+		{ "key": "usuarioId", "value": "1" }
+	],
+	"item": [
+		{
+			"name": "Listar usuarios",
+			"request": {
+				"method": "GET",
+				"url": "{{baseUrl}}/usuarios"
+			}
+		},
+		{
+			"name": "Crear usuario",
+			"request": {
+				"method": "POST",
+				"header": [{ "key": "Content-Type", "value": "application/json" }],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nombre\": \"Ana Perez\",\n  \"correo\": \"ana@foro.cl\",\n  \"clave\": \"Ana1234!\",\n  \"rol\": \"USUARIO\"\n}"
+				},
+				"url": "{{baseUrl}}/usuarios"
+			}
+		},
+		{
+			"name": "Obtener usuario",
+			"request": {
+				"method": "GET",
+				"url": "{{baseUrl}}/usuarios/{{usuarioId}}"
+			}
+		},
+		{
+			"name": "Actualizar usuario",
+			"request": {
+				"method": "PUT",
+				"header": [{ "key": "Content-Type", "value": "application/json" }],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nombre\": \"Ana Perez\",\n  \"correo\": \"ana@foro.cl\",\n  \"rol\": \"USUARIO\"\n}"
+				},
+				"url": "{{baseUrl}}/usuarios/{{usuarioId}}"
+			}
+		},
+		{
+			"name": "Iniciar sesion",
+			"request": {
+				"method": "POST",
+				"header": [{ "key": "Content-Type", "value": "application/json" }],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"correo\": \"ana@foro.cl\",\n  \"clave\": \"Ana1234!\"\n}"
+				},
+				"url": "{{baseUrl}}/usuarios/login"
+			}
+		},
+		{
+			"name": "Eliminar usuario",
+			"request": {
+				"method": "DELETE",
+				"url": "{{baseUrl}}/usuarios/{{usuarioId}}"
+			}
+		}
+	]
+}

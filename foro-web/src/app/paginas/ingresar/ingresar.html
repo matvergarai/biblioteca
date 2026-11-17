@@ -1,0 +1,31 @@
+<section class="nexo-panel">
+  <p class="nexo-kicker">Cuenta</p>
+  <h1>Iniciar sesion</h1>
+  <p class="nexo-ayuda">Prueba con admin&#64;nexo.cl / Admin123! o ana&#64;nexo.cl / Ana1234!</p>
+  <form class="row g-3" [formGroup]="form" (ngSubmit)="enviar()">
+    <div class="col-12">
+      <label class="form-label" for="correo">Correo</label>
+      <input class="form-control" id="correo" type="email" formControlName="correo" autocomplete="username" />
+      @if (form.controls.correo.touched && form.controls.correo.hasError('required')) {
+        <small class="nexo-error">El correo es obligatorio.</small>
+      }
+      @if (form.controls.correo.touched && form.controls.correo.hasError('email')) {
+        <small class="nexo-error">El correo no es valido.</small>
+      }
+    </div>
+    <div class="col-12">
+      <label class="form-label" for="clave">Clave</label>
+      <input class="form-control" id="clave" type="password" formControlName="clave" autocomplete="current-password" />
+      @if (form.controls.clave.touched && form.controls.clave.hasError('required')) {
+        <small class="nexo-error">La clave es obligatoria.</small>
+      }
+    </div>
+    @if (mensaje) {
+      <div class="col-12"><p class="nexo-error">{{ mensaje }}</p></div>
+    }
+    <div class="col-12 d-grid d-md-block">
+      <button class="btn nexo-btn" type="submit">Entrar</button>
+    </div>
+  </form>
+  <p class="nexo-enlaces"><a routerLink="/registro">Crear cuenta</a> · <a routerLink="/recuperar">Recuperar clave</a></p>
+</section>

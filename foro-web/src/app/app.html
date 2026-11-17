@@ -1,0 +1,34 @@
+<header class="nexo-barra">
+  <div class="container">
+    <div class="nexo-barra-fila">
+      <a class="nexo-marca" routerLink="/">
+        <img src="logo.svg" alt="" width="36" height="36" />
+        <span>Nexo</span>
+      </a>
+      <button class="nexo-menu" type="button" (click)="alternarMenu()" [attr.aria-expanded]="menuAbierto()">Menu</button>
+      <nav class="nexo-nav" [class.abierto]="menuAbierto()">
+        <a routerLink="/" routerLinkActive="activo" [routerLinkActiveOptions]="{ exact: true }">Inicio</a>
+        <a routerLink="/temas" routerLinkActive="activo">Temas</a>
+        @if (sesion.actual()) {
+          <a routerLink="/publicar" routerLinkActive="activo">Publicar</a>
+          <a routerLink="/perfil" routerLinkActive="activo">Perfil</a>
+        }
+        @if (sesion.esAdministrador()) {
+          <a routerLink="/moderacion" routerLinkActive="activo">Moderacion</a>
+        }
+        @if (sesion.actual()) {
+          <button type="button" (click)="cerrar()">Salir</button>
+        } @else {
+          <a routerLink="/ingresar" routerLinkActive="activo">Ingresar</a>
+          <a routerLink="/registro" routerLinkActive="activo">Registro</a>
+        }
+      </nav>
+    </div>
+  </div>
+</header>
+<main class="container nexo-main">
+  <router-outlet />
+</main>
+<footer class="nexo-pie">
+  <div class="container">Nexo · foro de la comunidad tecnica · usuario y administrador</div>
+</footer>

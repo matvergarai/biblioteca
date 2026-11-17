@@ -1,0 +1,51 @@
+@if (tema(); as actual) {
+  <article>
+    <p class="nexo-kicker">{{ nombreCategoria(actual.categoriaId) }}</p>
+    <h1>{{ actual.titulo }}</h1>
+    <p class="nexo-ayuda">{{ nombreAutor(actual.autorId) }} · {{ actual.fechaCreacion | date: 'dd/MM/yyyy HH:mm' }}</p>
+    <p class="nexo-cuerpo">{{ actual.contenido }}</p>
+  </article>
+  <section>
+    <h2>Comentarios</h2>
+    <div class="row g-3">
+      @for (comentario of comentarios(); track comentario.id) {
+        <div class="col-12">
+          <article class="nexo-comentario">
+            <strong>{{ nombreAutor(comentario.autorId) }}</strong>
+            <p>{{ comentario.contenido }}</p>
+          </article>
+        </div>
+      } @empty {
+        <div class="col-12"><p>Todavia no hay comentarios.</p></div>
+      }
+    </div>
+    @if (sesion.actual()) {
+      <form class="row g-3 nexo-filtros" [formGroup]="form" (ngSubmit)="comentar()">
+        <div class="col-12">
+          <label class="form-label" for="contenido">Tu comentario</label>
+          <textarea class="form-control" id="contenido" rows="3" formControlName="contenido"></textarea>
+          @if (form.controls.contenido.touched && form.controls.contenido.hasError('required')) {
+            <small class="nexo-error">El comentario es obligatorio.</small>
+          }
+          @if (form.controls.contenido.touched && form.controls.contenido.hasError('maxlength')) {
+            <small class="nexo-error">El comentario no puede superar 2000 caracteres.</small>
+          }
+        </div>
+        @if (mensaje) {
+          <div class="col-12"><p class="nexo-ok">{{ mensaje }}</p></div>
+        }
+        <div class="col-12">
+          <button class="btn nexo-btn" type="submit">Comentar</button>
+        </div>
+      </form>
+    } @else {
+      <p class="nexo-enlaces"><a routerLink="/ingresar">Inicia sesion</a> para comentar.</p>
+    }
+  </section>
+} @else {
+  <section class="nexo-panel">
+    <h1>Tema no disponible</h1>
+    <p>Puede estar baneado o no existir.</p>
+    <a routerLink="/temas">Volver a los temas</a>
+  </section>
+}

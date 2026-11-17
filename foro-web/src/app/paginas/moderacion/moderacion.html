@@ -1,0 +1,35 @@
+<section>
+  <p class="nexo-kicker">Administracion</p>
+  <h1>Moderacion del foro</h1>
+  <p class="nexo-ayuda">Solo el rol administrador puede banear temas o comentarios que incumplan las normas.</p>
+  <h2>Temas</h2>
+  <div class="row g-3">
+    @for (tema of foro.temas(); track tema.id) {
+      <div class="col-12 col-lg-6">
+        <article class="nexo-tarjeta nexo-tarjeta-fija">
+          <small>{{ tema.estado }}</small>
+          <strong>{{ tema.titulo }}</strong>
+          <span>{{ nombreAutor(tema.autorId) }}</span>
+          <button class="btn nexo-btn-sec" type="button" [disabled]="tema.estado === 'BANEADO'" (click)="banearTema(tema.id)">
+            Banear tema
+          </button>
+        </article>
+      </div>
+    }
+  </div>
+  <h2>Comentarios</h2>
+  <div class="row g-3">
+    @for (comentario of foro.comentarios(); track comentario.id) {
+      <div class="col-12 col-md-6 col-lg-4">
+        <article class="nexo-tarjeta nexo-tarjeta-fija">
+          <small>{{ comentario.estado }}</small>
+          <span>{{ comentario.contenido }}</span>
+          <span>{{ nombreAutor(comentario.autorId) }}</span>
+          <button class="btn nexo-btn-sec" type="button" [disabled]="comentario.estado === 'BANEADO'" (click)="banearComentario(comentario.id)">
+            Banear comentario
+          </button>
+        </article>
+      </div>
+    }
+  </div>
+</section>

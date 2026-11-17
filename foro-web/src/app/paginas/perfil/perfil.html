@@ -1,0 +1,56 @@
+<section class="nexo-panel">
+  <p class="nexo-kicker">Cuenta</p>
+  <h1>Modificar perfil</h1>
+  <p class="nexo-ayuda">Rol actual: {{ sesion.actual()?.rol }}</p>
+  <form class="row g-3" [formGroup]="form" (ngSubmit)="enviar()">
+    <div class="col-12 col-md-6">
+      <label class="form-label" for="nombre">Nombre</label>
+      <input class="form-control" id="nombre" formControlName="nombre" />
+      @if (form.controls.nombre.touched && form.controls.nombre.hasError('required')) {
+        <small class="nexo-error">El nombre es obligatorio.</small>
+      }
+    </div>
+    <div class="col-12 col-md-6">
+      <label class="form-label" for="correo">Correo</label>
+      <input class="form-control" id="correo" type="email" formControlName="correo" />
+      @if (form.controls.correo.touched && form.controls.correo.invalid) {
+        <small class="nexo-error">Ingresa un correo valido.</small>
+      }
+    </div>
+    <div class="col-12 col-lg-6">
+      <label class="form-label" for="clave">Nueva clave (opcional)</label>
+      <input class="form-control" id="clave" type="password" formControlName="clave" />
+      @if (form.controls.clave.touched && form.controls.clave.hasError('minimo')) {
+        <small class="nexo-error">Minimo 8 caracteres.</small>
+      }
+      @if (form.controls.clave.touched && form.controls.clave.hasError('maximo')) {
+        <small class="nexo-error">Maximo 72 caracteres.</small>
+      }
+      @if (form.controls.clave.touched && form.controls.clave.hasError('letras')) {
+        <small class="nexo-error">Debe incluir letras.</small>
+      }
+      @if (form.controls.clave.touched && form.controls.clave.hasError('numeros')) {
+        <small class="nexo-error">Debe incluir numeros.</small>
+      }
+      @if (form.controls.clave.touched && form.controls.clave.hasError('especial')) {
+        <small class="nexo-error">Debe incluir un caracter especial.</small>
+      }
+    </div>
+    <div class="col-12 col-lg-6">
+      <label class="form-label" for="confirmar">Repetir clave</label>
+      <input class="form-control" id="confirmar" type="password" formControlName="confirmar" />
+      @if (form.touched && form.hasError('distintas')) {
+        <small class="nexo-error">Las claves no coinciden.</small>
+      }
+    </div>
+    @if (mensaje) {
+      <div class="col-12"><p class="nexo-error">{{ mensaje }}</p></div>
+    }
+    @if (listo) {
+      <div class="col-12"><p class="nexo-ok">Perfil actualizado.</p></div>
+    }
+    <div class="col-12">
+      <button class="btn nexo-btn" type="submit">Guardar cambios</button>
+    </div>
+  </form>
+</section>

@@ -1,0 +1,46 @@
+{
+	"info": {
+		"name": "Foro moderacion",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{ "key": "baseUrl", "value": "http://localhost:8083" },
+		{ "key": "temaId", "value": "1" },
+		{ "key": "comentarioId", "value": "1" },
+		{ "key": "administradorId", "value": "1" }
+	],
+	"item": [
+		{
+			"name": "Listar temas",
+			"request": { "method": "GET", "url": "{{baseUrl}}/moderacion/temas" }
+		},
+		{
+			"name": "Listar comentarios",
+			"request": { "method": "GET", "url": "{{baseUrl}}/moderacion/comentarios" }
+		},
+		{
+			"name": "Banear tema",
+			"request": {
+				"method": "PUT",
+				"header": [{ "key": "Content-Type", "value": "application/json" }],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"administradorId\": {{administradorId}}\n}"
+				},
+				"url": "{{baseUrl}}/moderacion/temas/{{temaId}}/banear"
+			}
+		},
+		{
+			"name": "Banear comentario",
+			"request": {
+				"method": "PUT",
+				"header": [{ "key": "Content-Type", "value": "application/json" }],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"administradorId\": {{administradorId}}\n}"
+				},
+				"url": "{{baseUrl}}/moderacion/comentarios/{{comentarioId}}/banear"
+			}
+		}
+	]
+}

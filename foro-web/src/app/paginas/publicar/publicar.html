@@ -1,0 +1,41 @@
+<section class="nexo-panel">
+  <p class="nexo-kicker">Publicacion</p>
+  <h1>Publicar un tema</h1>
+  <form class="row g-3" [formGroup]="form" (ngSubmit)="enviar()">
+    <div class="col-12">
+      <label class="form-label" for="titulo">Titulo</label>
+      <input class="form-control" id="titulo" formControlName="titulo" />
+      @if (form.controls.titulo.touched && form.controls.titulo.hasError('required')) {
+        <small class="nexo-error">El titulo es obligatorio.</small>
+      }
+      @if (form.controls.titulo.touched && form.controls.titulo.hasError('maxlength')) {
+        <small class="nexo-error">El titulo no puede superar 200 caracteres.</small>
+      }
+    </div>
+    <div class="col-12 col-md-6">
+      <label class="form-label" for="categoriaId">Categoria</label>
+      <select class="form-select" id="categoriaId" formControlName="categoriaId">
+        <option value="">Selecciona una categoria</option>
+        @for (categoria of foro.categorias(); track categoria.id) {
+          <option [value]="categoria.id">{{ categoria.nombre }}</option>
+        }
+      </select>
+      @if (form.controls.categoriaId.touched && form.controls.categoriaId.hasError('required')) {
+        <small class="nexo-error">La categoria es obligatoria.</small>
+      }
+    </div>
+    <div class="col-12">
+      <label class="form-label" for="contenido">Contenido</label>
+      <textarea class="form-control" id="contenido" rows="6" formControlName="contenido"></textarea>
+      @if (form.controls.contenido.touched && form.controls.contenido.hasError('required')) {
+        <small class="nexo-error">El contenido es obligatorio.</small>
+      }
+      @if (form.controls.contenido.touched && form.controls.contenido.hasError('maxlength')) {
+        <small class="nexo-error">El contenido no puede superar 4000 caracteres.</small>
+      }
+    </div>
+    <div class="col-12">
+      <button class="btn nexo-btn" type="submit">Publicar</button>
+    </div>
+  </form>
+</section>

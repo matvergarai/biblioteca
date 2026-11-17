@@ -1,0 +1,55 @@
+{
+	"info": {
+		"name": "Foro publicaciones",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{ "key": "baseUrl", "value": "http://localhost:8082" },
+		{ "key": "temaId", "value": "1" },
+		{ "key": "comentarioId", "value": "1" },
+		{ "key": "autorId", "value": "1" },
+		{ "key": "categoriaId", "value": "1" }
+	],
+	"item": [
+		{
+			"name": "Listar categorias",
+			"request": { "method": "GET", "url": "{{baseUrl}}/categorias" }
+		},
+		{
+			"name": "Buscar temas",
+			"request": { "method": "GET", "url": "{{baseUrl}}/temas?texto=&categoriaId=" }
+		},
+		{
+			"name": "Publicar tema",
+			"request": {
+				"method": "POST",
+				"header": [{ "key": "Content-Type", "value": "application/json" }],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"titulo\": \"Como conectar Oracle\",\n  \"contenido\": \"Pasos para usar el wallet con Spring Boot.\",\n  \"categoriaId\": {{categoriaId}},\n  \"autorId\": {{autorId}}\n}"
+				},
+				"url": "{{baseUrl}}/temas"
+			}
+		},
+		{
+			"name": "Ver tema",
+			"request": { "method": "GET", "url": "{{baseUrl}}/temas/{{temaId}}" }
+		},
+		{
+			"name": "Comentar tema",
+			"request": {
+				"method": "POST",
+				"header": [{ "key": "Content-Type", "value": "application/json" }],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"contenido\": \"Gracias, me sirvio el ejemplo.\",\n  \"autorId\": {{autorId}}\n}"
+				},
+				"url": "{{baseUrl}}/temas/{{temaId}}/comentarios"
+			}
+		},
+		{
+			"name": "Listar comentarios",
+			"request": { "method": "GET", "url": "{{baseUrl}}/temas/{{temaId}}/comentarios" }
+		}
+	]
+}

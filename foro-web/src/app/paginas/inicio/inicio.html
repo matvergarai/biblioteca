@@ -1,0 +1,27 @@
+<section class="nexo-hero">
+  <div class="row align-items-center g-4">
+    <div class="col-12 col-lg-7">
+      <p class="nexo-kicker">Comunidad tecnica</p>
+      <h1>Nexo, el foro para compartir como construyes software.</h1>
+      <p>Cinco categorias, dos roles y las conversaciones de la comunidad. Los datos viven en listas de la aplicacion.</p>
+      <a class="btn nexo-btn" routerLink="/temas">Ver temas</a>
+    </div>
+    <div class="col-12 col-lg-5">
+      <img class="nexo-hero-logo" src="logo.svg" alt="Logo de Nexo" />
+    </div>
+  </div>
+</section>
+<section>
+  <h2>Categorias</h2>
+  <div class="row g-3">
+    @for (categoria of foro.categorias(); track categoria.id) {
+      <div class="col-12 col-md-6 col-lg-4">
+        <a class="nexo-tarjeta" [routerLink]="['/temas']" [queryParams]="{ categoriaId: categoria.id }">
+          <strong>{{ categoria.nombre }}</strong>
+          <span>{{ categoria.descripcion }}</span>
+          <small>{{ cantidad(categoria.id) }} temas publicados</small>
+        </a>
+      </div>
+    }
+  </div>
+</section>
